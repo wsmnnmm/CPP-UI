@@ -1,15 +1,13 @@
 <template>
   <div>hi</div>
-  <Wsm />
+  导航栏 | <router-link to="/">Home</router-link> |
+  <router-link to="/doc">Doc</router-link>
+  <hr />
+  <router-view />
 </template>
 
 <script>
-import Wsm from "./components/wsm.vue";
-
 export default {
   name: "App",
-  components: {
-    Wsm,
-  },
 };
 </script>
