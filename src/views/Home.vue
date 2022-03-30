@@ -17,4 +17,26 @@ export default {
   components: { Topnav },
 };
 </script>
-<style lang="scss" scope></style>
+<style lang="scss" scope>
+.banner {
+  padding: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: lightgreen;
+  > .actions {
+    padding: 0 8px;
+    a {
+      margin: 0 8px;
+      background: #fff;
+      display: inline-block;
+      $h: 28px;
+      height: $h;
+      border-radius: $h/2;
+      line-height: $h;
+      padding: 0 8px;
+    }
+  }
+}
+</style>
