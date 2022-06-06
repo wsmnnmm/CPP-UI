@@ -80,7 +80,9 @@ $radius: 4px;
       background: darken(white, 5%);
     }
   }
-  &.cpp-theme-button {
+  &.cpp-theme-button,
+  &.cpp-theme-link,
+  &.cpp-theme-text {
     &.cpp-size-big {
       font-size: 24px;
       height: 48px;
