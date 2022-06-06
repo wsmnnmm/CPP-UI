@@ -15,13 +15,18 @@ export default {
       type: String,
       default: "normal",
     },
+    level: {
+      type: String,
+      default: "normal",
+    },
   },
   setup(props) {
-    const { theme, size } = props;
+    const { theme, size, level } = props;
     const classes = computed(() => {
       return {
         [`cpp-theme-${theme}`]: theme,
         [`cpp-size-${size}`]: size,
+        [`cpp-level-${level}`]: level,
       };
     });
     return { classes };
@@ -33,6 +38,7 @@ $h: 32px;
 $border-color: #d9d9d9;
 $color: #333;
 $blue: #40a9ff;
+$red: #ff4d4f;
 $radius: 4px;
 .cpp-button {
   box-sizing: border-box;
@@ -94,6 +100,56 @@ $radius: 4px;
       height: 16px;
       line-height: 16px;
       padding: 0 6px;
+    }
+  }
+  &.cpp-theme-button {
+    &.cpp-level-main {
+      color: white;
+      background: $blue;
+      &:hover,
+      &:focus {
+        background: lighten($blue, 5%);
+      }
+    }
+    &.cpp-level-danger {
+      border-color: $red;
+      color: white;
+      background: $red;
+      &:hover,
+      &:focus {
+        background: lighten($red, 5%);
+      }
+    }
+  }
+  &.cpp-theme-link {
+    &.cpp-level-main {
+      &:hover,
+      &:focus {
+        color: darken($blue, 10%);
+      }
+    }
+    &.cpp-level-danger {
+      color: $red;
+      &:hover,
+      &:focus {
+        color: lighten($red, 5%);
+      }
+    }
+  }
+  &.cpp-theme-text {
+    &.cpp-level-main {
+      color: $blue;
+      &:hover,
+      &:focus {
+        color: darken($blue, 10%);
+      }
+    }
+    &.cpp-level-danger {
+      color: $red;
+      &:hover,
+      &:focus {
+        color: darken($red, 10%);
+      }
     }
   }
 }
