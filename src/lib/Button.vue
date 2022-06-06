@@ -1,15 +1,30 @@
 <template>
-  <button class="cpp-button" :class="`cpp-theme-${theme}`">
+  <button class="cpp-button" :class="classes">
     <slot />
   </button>
 </template>
 <script>
+import { computed } from "@vue/runtime-core";
 export default {
   props: {
     theme: {
       type: String,
       default: "button",
     },
+    size: {
+      type: String,
+      default: "normal",
+    },
+  },
+  setup(props) {
+    const { theme, size } = props;
+    const classes = computed(() => {
+      return {
+        [`cpp-theme-${theme}`]: theme,
+        [`cpp-size-${size}`]: size,
+      };
+    });
+    return { classes };
   },
 };
 </script>
@@ -63,6 +78,20 @@ $radius: 4px;
     &:hover,
     &:focus {
       background: darken(white, 5%);
+    }
+  }
+  &.cpp-theme-button {
+    &.cpp-size-big {
+      font-size: 24px;
+      height: 48px;
+      line-height: 48px;
+      padding: 0 18px;
+    }
+    &.cpp-size-small {
+      font-size: 8px;
+      height: 16px;
+      line-height: 16px;
+      padding: 0 6px;
     }
   }
 }
