@@ -1,5 +1,6 @@
 <template>
-  <button class="cpp-button" :class="classes">
+  <button class="cpp-button" :class="classes" :disabled="disabled">
+    <span v-if="loading" class="cpp-loadingIndicator"></span>
     <slot />
   </button>
 </template>
@@ -18,6 +19,14 @@ export default {
     level: {
       type: String,
       default: "normal",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
@@ -40,6 +49,7 @@ $color: #333;
 $blue: #40a9ff;
 $red: #ff4d4f;
 $radius: 4px;
+$grey: grey;
 .cpp-button {
   box-sizing: border-box;
   height: $h;
@@ -151,6 +161,41 @@ $radius: 4px;
         color: darken($red, 10%);
       }
     }
+  }
+  &.cpp-theme-button {
+    &[disabled] {
+      cursor: not-allowed;
+      color: $grey;
+      &:hover {
+        border-color: $grey;
+      }
+    }
+  }
+  &.cpp-theme-link,
+  &.cpp-theme-text {
+    &[disabled] {
+      cursor: not-allowed;
+      color: $grey;
+    }
+  }
+  > .cpp-loadingIndicator {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    margin-right: 4px;
+    border-radius: 8px;
+    border-color: $blue $blue $blue transparent;
+    border-width: 2px;
+    border-style: solid;
+    animation: cpp-spin 1s infinite linear;
+  }
+}
+@keyframes cpp-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
