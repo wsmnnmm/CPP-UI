@@ -6,7 +6,10 @@
     :closeOnClickOverlay="false"
     :ok="f1"
     :cancel="f2"
-  ></Dialog>
+  >
+    <div>你好</div>
+    <dir>hi</dir></Dialog
+  >
   <Button @click="toggle">toggle</Button>
 </template>
 <script>
