@@ -1,19 +1,19 @@
 <template >
   <template v-if="visible">
-    <div class="cpp-dialog-overlay"></div>
+    <div class="cpp-dialog-overlay" @click="onClickOverlay"></div>
     <div class="cpp-dialog-wrapper">
       <div class="cpp-dialog">
         <header>
           标题
-          <span class="cpp-dialog-close"></span>
+          <span @click="close" class="cpp-dialog-close"></span>
         </header>
         <main>
           <p>第一行字</p>
           <p>第二行字</p>
         </main>
         <footer>
-          <Button>ok</Button>
-          <Button>Cancel</Button>
+          <Button @click="ok">ok</Button>
+          <Button @click="cancel">Cancel</Button>
         </footer>
       </div>
     </div>
@@ -27,8 +27,39 @@ export default {
       type: Boolean,
       default: false,
     },
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: true,
+    },
+    ok: {
+      type: Function,
+    },
+    cancel: {
+      type: Function,
+    },
   },
   components: { Button },
+  setup(props, context) {
+    const close = () => {
+      context.emit("update:visible", false);
+    };
+    const onClickOverlay = () => {
+      if (props.closeOnClickOverlay) {
+        close();
+      }
+    };
+    const ok = () => {
+      if (props.ok?.() !== false) {
+        close();
+      }
+    };
+    const cancel = () => {
+      if (props.cancel?.() !== false) {
+        close();
+      }
+    };
+    return { close, onClickOverlay, ok, cancel };
+  },
 };
 </script>
 <style lang="scss">
