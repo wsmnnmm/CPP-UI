@@ -1,22 +1,22 @@
 <template >
   <template v-if="visible">
     <teleport to="#app">
-    <div class="cpp-dialog-overlay" @click="onClickOverlay"></div>
-    <div class="cpp-dialog-wrapper">
-      <div class="cpp-dialog">
-        <header>
-          <slot name="title">
-          <span @click="close" class="cpp-dialog-close"></span>
-        </header>
-        <main>
-          <slot name="content" />
-        </main>
-        <footer>
-          <Button @click="ok">ok</Button>
-          <Button @click="cancel">Cancel</Button>
-        </footer>
+      <div class="cpp-dialog-overlay" @click="onClickOverlay"></div>
+      <div class="cpp-dialog-wrapper">
+        <div class="cpp-dialog">
+          <header>
+            <slot name="title" />
+            <span @click="close" class="cpp-dialog-close"></span>
+          </header>
+          <main>
+            <slot name="content" />
+          </main>
+          <footer>
+            <Button @click="ok">ok</Button>
+            <Button @click="cancel">Cancel</Button>
+          </footer>
+        </div>
       </div>
-    </div>
     </teleport>
   </template>
 </template>
@@ -27,7 +27,7 @@ export default {
   props: {
     visible: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     closeOnClickOverlay: {
       type: Boolean,
