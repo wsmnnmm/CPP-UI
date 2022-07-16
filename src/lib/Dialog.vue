@@ -1,5 +1,6 @@
 <template >
   <template v-if="visible">
+    <teleport to="#app">
     <div class="cpp-dialog-overlay" @click="onClickOverlay"></div>
     <div class="cpp-dialog-wrapper">
       <div class="cpp-dialog">
@@ -16,9 +17,11 @@
         </footer>
       </div>
     </div>
+    </teleport>
   </template>
 </template>
 <script>
+import TabsDemo from "../components/TabsDemo.vue";
 import Button from "../lib/Button.vue";
 export default {
   props: {
@@ -37,7 +40,7 @@ export default {
       type: Function,
     },
   },
-  components: { Button },
+  components: { Button, TabsDemo },
   setup(props, context) {
     const close = () => {
       context.emit("update:visible", false);
