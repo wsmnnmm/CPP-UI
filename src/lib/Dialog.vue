@@ -4,11 +4,11 @@
     <div class="cpp-dialog-wrapper">
       <div class="cpp-dialog">
         <header>
-          {{ title }}
+          <slot name="title">
           <span @click="close" class="cpp-dialog-close"></span>
         </header>
         <main>
-          <slot />
+          <slot name="content" />
         </main>
         <footer>
           <Button @click="ok">ok</Button>
@@ -22,10 +22,6 @@
 import Button from "../lib/Button.vue";
 export default {
   props: {
-    title: {
-      type: String,
-      default: "标题",
-    },
     visible: {
       type: Boolean,
       default: false,

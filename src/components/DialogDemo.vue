@@ -7,9 +7,13 @@
     :ok="f1"
     :cancel="f2"
   >
-    <div>你好</div>
-    <dir>hi</dir></Dialog
-  >
+    <template v-slot:title>
+      <strong>标题</strong>
+    </template>
+    <template v-slot:content>
+      <div>内容:你好</div>
+    </template>
+  </Dialog>
   <Button @click="toggle">toggle</Button>
 </template>
 <script>
