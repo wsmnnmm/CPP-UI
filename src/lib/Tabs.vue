@@ -30,7 +30,7 @@
 </template>
 <script lang="ts">
 import Tab from "../lib/Tab.vue";
-import { computed, ref, watchEffect } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 export default {
   props: {
     selected: {
@@ -42,15 +42,16 @@ export default {
     const indicator = ref<HTMLDivElement>(null);
     const defaults = context.slots.default();
     const container = ref<HTMLDivElement>(null);
-    const x = () => {
-      const { width } = selectedItem.value.getBoundingClientRect();
-      indicator.value.style.width = width + "px";
-      const { left: left1 } = container.value.getBoundingClientRect();
-      const { left: left2 } = selectedItem.value.getBoundingClientRect();
-      const left = left2 - left1;
-      indicator.value.style.left = left + "px";
-    };
-    watchEffect(x);
+    onMounted(() => {
+      watchEffect(() => {
+        const { width } = selectedItem.value.getBoundingClientRect();
+        indicator.value.style.width = width + "px";
+        const { left: left1 } = container.value.getBoundingClientRect();
+        const { left: left2 } = selectedItem.value.getBoundingClientRect();
+        const left = left2 - left1;
+        indicator.value.style.left = left + "px";
+      });
+    });
     defaults.forEach((tag) => {
       if (tag.type !== Tab) {
         throw new Error("Tabs 子标签必须是 Tab");
