@@ -1,18 +1,36 @@
 <template>
   <div class="cpp-tabs">
     <div class="cpp-tabs-nav">
-      <div class="cpp-tabs-nav-item" v-for="(t, index) in titles" :key="index">
+      <div
+        class="cpp-tabs-nav-item"
+        :class="{ selected: t === selected }"
+        v-for="(t, index) in titles"
+        @click="select(t)"
+        :key="index"
+      >
         {{ t }}
       </div>
     </div>
     <div class="cpp-tabs-content">
-      <component v-for="(c, index) in defaults" :is="c" :key="index" />
+      <component
+        class="cpp-tabs-content-item"
+        :class="{ selected: c.props.title === selected }"
+        v-for="(c, index) in defaults"
+        :is="c"
+        :key="index"
+      />
     </div>
   </div>
 </template>
 <script lang="ts">
 import Tab from "../lib/Tab.vue";
+import { computed } from "vue";
 export default {
+  props: {
+    selected: {
+      type: String,
+    },
+  },
   setup(props, context) {
     const defaults = context.slots.default();
     defaults.forEach((tag) => {
@@ -23,9 +41,19 @@ export default {
     const titles = defaults.map((tag) => {
       return tag.props.title;
     });
+    const current = computed(() => {
+      return defaults.filter((tag) => {
+        return tag.props.title === props.selected;
+      })[0];
+    });
+    const select = (title: string) => {
+      context.emit("update:selected", title);
+    };
     return {
       defaults,
       titles,
+      select,
+      current,
     };
   },
 };
@@ -53,6 +81,12 @@ $border-color: #d9d9d9;
   }
   &-content {
     padding: 8px 0;
+    &-item {
+      display: none;
+      &.selected {
+        display: block;
+      }
+    }
   }
 }
 </style>
