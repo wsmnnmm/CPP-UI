@@ -30,7 +30,7 @@
 </template>
 <script lang="ts">
 import Tab from "../lib/Tab.vue";
-import { computed, onMounted, onUpdated, ref, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 export default {
   props: {
     selected: {
@@ -59,11 +59,7 @@ export default {
     const titles = defaults.map((tag) => {
       return tag.props.title;
     });
-    const current = computed(() => {
-      return defaults.filter((tag) => {
-        return tag.props.title === props.selected;
-      })[0];
-    });
+
     const select = (title: string) => {
       context.emit("update:selected", title);
     };
@@ -71,7 +67,6 @@ export default {
       defaults,
       titles,
       select,
-      current,
       selectedItem,
       indicator,
       container,
