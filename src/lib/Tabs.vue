@@ -1,15 +1,21 @@
 <template>
   <div class="cpp-tabs">
-    <div class="cpp-tabs-nav">
+    <div class="cpp-tabs-nav" ref="container">
       <div
         class="cpp-tabs-nav-item"
         :class="{ selected: t === selected }"
         v-for="(t, index) in titles"
+        :ref="
+          (el) => {
+            if (el) navItems[index] = el;
+          }
+        "
         @click="select(t)"
         :key="index"
       >
         {{ t }}
       </div>
+      <div class="cpp-tabs-nav-indicator" ref="indicator"></div>
     </div>
     <div class="cpp-tabs-content">
       <component
@@ -24,7 +30,7 @@
 </template>
 <script lang="ts">
 import Tab from "../lib/Tab.vue";
-import { computed } from "vue";
+import { computed, onMounted, onUpdated, ref } from "vue";
 export default {
   props: {
     selected: {
@@ -32,7 +38,25 @@ export default {
     },
   },
   setup(props, context) {
+    const navItems = ref<HTMLDivElement[]>([]);
+    const indicator = ref<HTMLDivElement>(null);
     const defaults = context.slots.default();
+    const container = ref<HTMLDivElement>(null);
+    const x = () => {
+      const divs = navItems.value;
+      const result = divs.filter((div) =>
+        div.classList.contains("selected")
+      )[0];
+      console.log(result);
+      const { width } = result.getBoundingClientRect();
+      indicator.value.style.width = width + "px";
+      const { left: left1 } = container.value.getBoundingClientRect();
+      const { left: left2 } = result.getBoundingClientRect();
+      const left = left2 - left1;
+      indicator.value.style.left = left + "px";
+    };
+    onMounted(x); //第一次渲染时
+    onUpdated(x); //变化时
     defaults.forEach((tag) => {
       if (tag.type !== Tab) {
         throw new Error("Tabs 子标签必须是 Tab");
@@ -54,6 +78,9 @@ export default {
       titles,
       select,
       current,
+      navItems,
+      indicator,
+      container,
     };
   },
 };
@@ -65,6 +92,7 @@ $border-color: #d9d9d9;
 .cpp-tabs {
   &-nav {
     display: flex;
+    position: relative;
     color: $color;
     border-bottom: 1px solid $border-color;
     &-item {
@@ -77,6 +105,15 @@ $border-color: #d9d9d9;
       &.selected {
         color: $blue;
       }
+    }
+    &-indicator {
+      position: absolute;
+      height: 3px;
+      background: $blue;
+      left: 0;
+      bottom: -1px;
+      width: 100px;
+      transition: all 300ms;
     }
   }
   &-content {
