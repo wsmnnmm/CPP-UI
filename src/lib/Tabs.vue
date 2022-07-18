@@ -30,7 +30,7 @@
 </template>
 <script lang="ts">
 import Tab from "../lib/Tab.vue";
-import { computed, onMounted, onUpdated, ref } from "vue";
+import { computed, onMounted, onUpdated, ref, watchEffect } from "vue";
 export default {
   props: {
     selected: {
@@ -50,8 +50,7 @@ export default {
       const left = left2 - left1;
       indicator.value.style.left = left + "px";
     };
-    onMounted(x); //第一次渲染时
-    onUpdated(x); //变化时
+    watchEffect(x);
     defaults.forEach((tag) => {
       if (tag.type !== Tab) {
         throw new Error("Tabs 子标签必须是 Tab");
