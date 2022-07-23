@@ -1,8 +1,14 @@
 <template>
   <div class="layout">
-    <Topnav class="nav" />
+    <Topnav toggleMenuButtonVisible class="nav" />
     <div class="content">
       <aside v-if="menuVisible">
+        <h2>文档</h2>
+        <ol>
+          <li><router-link to="/doc/intro">介绍</router-link></li>
+          <li><router-link to="/doc/install">安装</router-link></li>
+          <li><router-link to="/doc/get-started">开始使用</router-link></li>
+        </ol>
         <h2>组件列表</h2>
         <ol>
           <li>
@@ -62,7 +68,7 @@ export default {
   }
 }
 aside {
-  background: lightblue;
+  background: #dcfcf9;
   width: 150px;
   padding: 16px;
   position: fixed;
