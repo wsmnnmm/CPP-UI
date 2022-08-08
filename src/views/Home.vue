@@ -3,8 +3,8 @@
     <div class="topnavAndBanner">
       <Topnav />
       <div class="banner">
-        <h1>CPP UI</h1>
-        <h2>一个厉害的UI框架</h2>
+        <h1>Cppx UI</h1>
+        <h2>一个用于学习的UI框架</h2>
         <p class="actions">
           <a href="https://github.com/wsmnnmm/CPP-UI" target="_blank">GitHub</a>
           <router-link to="/doc/intro">开始</router-link>
